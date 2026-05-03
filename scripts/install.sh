@@ -163,6 +163,10 @@ if [ -d "$INSTALL_DIR" ]; then
     warn "Directory $INSTALL_DIR already exists."
     read -rp "Overwrite? [y/N] " yn
     if [ "${yn:-n}" = "y" ] || [ "${yn:-n}" = "Y" ]; then
+        # cd out first in case we're inside the directory
+        if [[ "$PWD" == "$INSTALL_DIR"* ]]; then
+            cd "$HOME" 2>/dev/null || cd /
+        fi
         rm -rf "$INSTALL_DIR"
     else
         info "Skipping clone. Using existing directory."
