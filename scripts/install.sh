@@ -178,7 +178,20 @@ fi
 cd "$INSTALL_DIR"
 
 # ─────────────────────────────────────────────────────────────
-# 6. Create virtual environment
+# 6. Install system dependencies for venv
+# ─────────────────────────────────────────────────────────────
+
+if [ "$(uname -s)" = "Linux" ] && ! $IS_TERMUX; then
+    if ! $PYTHON -m venv --help &>/dev/null 2>&1; then
+        info "Installing python3-venv (required for virtual environment)..."
+        sudo apt-get update -qq
+        sudo apt-get install -y -qq python3-venv python3-dev
+        log "python3-venv installed"
+    fi
+fi
+
+# ─────────────────────────────────────────────────────────────
+# 7. Create virtual environment
 # ─────────────────────────────────────────────────────────────
 
 header "Setting up virtual environment"
@@ -197,7 +210,7 @@ source .venv/bin/activate || source .venv/bin/activate.csh 2>/dev/null || true
 log "Virtual environment: $INSTALL_DIR/.venv"
 
 # ─────────────────────────────────────────────────────────────
-# 7. Install dependencies
+# 8. Install dependencies
 # ─────────────────────────────────────────────────────────────
 
 header "Installing dependencies"
@@ -214,7 +227,7 @@ $PYTHON -m pip install -e . 2>&1 | tee -a "$LOGFILE" || {
 log "Dependencies installed"
 
 # ─────────────────────────────────────────────────────────────
-# 8. Configure environment
+# 9. Configure environment
 # ─────────────────────────────────────────────────────────────
 
 header "Configuration"
@@ -255,7 +268,7 @@ if [ ${#MISSING_KEYS[@]} -gt 0 ]; then
 fi
 
 # ─────────────────────────────────────────────────────────────
-# 9. Add activation to shell config
+# 10. Add activation to shell config
 # ─────────────────────────────────────────────────────────────
 
 header "Shell integration"
@@ -281,7 +294,7 @@ if ! $IS_TERMUX; then
 fi
 
 # ─────────────────────────────────────────────────────────────
-# 10. Verify installation
+# 11. Verify installation
 # ─────────────────────────────────────────────────────────────
 
 header "Verifying installation"
@@ -307,7 +320,7 @@ else
 fi
 
 # ─────────────────────────────────────────────────────────────
-# 11. Done
+# 12. Done
 # ─────────────────────────────────────────────────────────────
 
 echo ""
