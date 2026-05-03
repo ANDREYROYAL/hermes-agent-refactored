@@ -326,21 +326,25 @@ def _create_agent(
     verbose: bool = False,
     quiet: bool = False,
 ):
-    """Create an AIAgent instance using refactored components."""
+    """Create an AIAgent instance."""
     from run_agent import AIAgent
     
-    agent = AIAgent(
+    kwargs = dict(
         model=model,
         provider=provider,
-        api_key=api_key,
-        base_url=base_url,
         max_iterations=max_turns,
-        enabled_toolsets=enabled_toolsets,
         quiet_mode=quiet,
         verbose_logging=verbose,
     )
     
-    return agent
+    if api_key:
+        kwargs["api_key"] = api_key
+    if base_url:
+        kwargs["base_url"] = base_url
+    if enabled_toolsets:
+        kwargs["enabled_toolsets"] = enabled_toolsets
+    
+    return AIAgent(**kwargs)
 
 
 if __name__ == "__main__":
