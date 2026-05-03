@@ -276,7 +276,7 @@ fi
 
 header "Shell integration"
 
-ACTIVATE_CMD="alias hermes-refactored='cd $INSTALL_DIR && source .venv/bin/activate && python agent/refactored_agent_example.py'"
+ACTIVATE_CMD="alias hermes='cd $INSTALL_DIR && source .venv/bin/activate && hermes-refactored'"
 
 add_to_shell_config() {
     local config_file="$1"
@@ -337,12 +337,16 @@ echo -e "  ${BOLD}Config:${NC}   ${CYAN}$ENV_FILE${NC}"
 echo ""
 echo -e "  ${BOLD}Quick start:${NC}"
 echo ""
+echo "    source ~/.bashrc   # reload shell (or: source ~/.zshrc)"
+echo "    hermes             # start chatting!"
+echo ""
+echo -e "  ${BOLD}Or directly:${NC}"
 echo "    cd $INSTALL_DIR"
 echo "    source .venv/bin/activate"
-echo "    python agent/refactored_agent_example.py"
-echo ""
-echo -e "  ${BOLD}Or use alias (restart shell first):${NC}"
 echo "    hermes-refactored"
+echo ""
+echo -e "  ${BOLD}Alias added:${NC}"
+echo "    hermes → hermes-refactored (restart shell to activate)"
 echo ""
 
 if [ ${#MISSING_KEYS[@]} -gt 0 ]; then
