@@ -30,7 +30,7 @@ Use any model you want — [Nous Portal](https://portal.nousresearch.com), [Open
 ## Quick Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ANDREYROYAL/hermes-agent-refactored/main/scripts/install.sh | bash
 ```
 
 Works on Linux, macOS, WSL2, and Android via Termux. The installer handles the platform-specific setup for you.
@@ -43,8 +43,12 @@ After installation:
 
 ```bash
 source ~/.bashrc    # reload shell (or: source ~/.zshrc)
-hermes              # start chatting!
+cd ~/hermes-agent-refactored
+source .venv/bin/activate
+python agent/refactored_agent_example.py
 ```
+
+> **✨ Refactored Edition:** This fork includes 7 critical security fixes, a new modular architecture (6 components), and 96% less monolithic code. [See what's new →](https://github.com/ANDREYROYAL/hermes-agent-refactored#readme)
 
 ---
 
