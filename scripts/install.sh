@@ -186,11 +186,14 @@ cd "$INSTALL_DIR"
 # ─────────────────────────────────────────────────────────────
 
 if [ "$(uname -s)" = "Linux" ] && ! $IS_TERMUX; then
-    if ! $PYTHON -m venv --help &>/dev/null 2>&1; then
+    info "Checking system dependencies..."
+    if ! dpkg -l python3-venv &>/dev/null 2>&1; then
         info "Installing python3-venv (required for virtual environment)..."
         sudo apt-get update -qq
         sudo apt-get install -y -qq python3-venv python3-dev
         log "python3-venv installed"
+    else
+        log "python3-venv already installed"
     fi
 fi
 
