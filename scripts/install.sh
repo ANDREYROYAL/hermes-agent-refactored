@@ -154,7 +154,19 @@ fi
 log "git: $(git --version 2>&1)"
 
 # ─────────────────────────────────────────────────────────────
-# 5. Clone repository
+# 5. Install system dependencies
+# ─────────────────────────────────────────────────────────────
+
+if [ "$(uname -s)" = "Linux" ] && ! $IS_TERMUX; then
+    header "System dependencies"
+    info "Installing python3-venv and build tools..."
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq python3-venv python3-dev 2>/dev/null
+    log "System dependencies ready"
+fi
+
+# ─────────────────────────────────────────────────────────────
+# 6. Clone repository
 # ─────────────────────────────────────────────────────────────
 
 header "Cloning repository"
@@ -182,22 +194,6 @@ fi
 cd "$INSTALL_DIR"
 
 # ─────────────────────────────────────────────────────────────
-# 6. Install system dependencies for venv
-# ─────────────────────────────────────────────────────────────
-
-if [ "$(uname -s)" = "Linux" ] && ! $IS_TERMUX; then
-    info "Checking system dependencies..."
-    if ! dpkg -l python3-venv &>/dev/null 2>&1; then
-        info "Installing python3-venv (required for virtual environment)..."
-        sudo apt-get update -qq
-        sudo apt-get install -y -qq python3-venv python3-dev
-        log "python3-venv installed"
-    else
-        log "python3-venv already installed"
-    fi
-fi
-
-# ─────────────────────────────────────────────────────────────
 # 7. Create virtual environment
 # ─────────────────────────────────────────────────────────────
 
@@ -217,7 +213,7 @@ source .venv/bin/activate || source .venv/bin/activate.csh 2>/dev/null || true
 log "Virtual environment: $INSTALL_DIR/.venv"
 
 # ─────────────────────────────────────────────────────────────
-# 8. Install dependencies
+# 8. Install Python dependencies
 # ─────────────────────────────────────────────────────────────
 
 header "Installing dependencies"
